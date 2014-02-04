@@ -11,8 +11,10 @@ class Opencsg < Formula
   depends_on 'openscad/tap/glew'
 
   def install
-    macosx_deployment_target = ARGV.value('macosx-deployment-target') || MacOS.version
-    system "qmake", "-r", "PREFIX=#{prefix}"
+    system "qmake", "-r", "PREFIX=#{prefix}",
+      "INCLUDEPATH+=#{HOMEBREW_PREFIX}/include", 
+      "LIBS+=-L#{HOMEBREW_PREFIX}/lib -lGLEW"
+
     system "make", "install"
   end
 
@@ -48,12 +50,13 @@ diff --git a/src/src.pro b/src/src.pro
 index 71d201b..67c6f20 100644
 --- a/src/src.pro
 +++ b/src/src.pro
-@@ -4,7 +4,7 @@ VERSION     = 1.3.2
+@@ -4,7 +4,8 @@ VERSION     = 1.3.2
  DESTDIR     = ../lib
  
  CONFIG		+= opengl warn_on release
 -INCLUDEPATH += ../include ../glew/include ../
 +INCLUDEPATH += ../include ../
++CONFIG -= qt
  
  HEADERS		= ../include/opencsg.h \
  		  opencsgConfig.h \
