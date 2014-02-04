@@ -5,10 +5,13 @@ class Opencsg < Formula
   url 'http://www.opencsg.org/OpenCSG-1.3.2.tar.gz'
   sha1 'e2b4abf169ae3e319eb5f6d9ae6136fa96710a05'
 
-  depends_on 'qt' => :build
-  depends_on 'glew'
+  option "macosx-deployment-target=", "Mac OS X deployment target"
+
+  depends_on 'openscad/tap/qt' => :build
+  depends_on 'openscad/tap/glew'
 
   def install
+    macosx_deployment_target = ARGV.value('macosx-deployment-target') || MacOS.version
     system "qmake", "-r", "PREFIX=#{prefix}"
     system "make", "install"
   end

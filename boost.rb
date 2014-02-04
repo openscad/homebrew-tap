@@ -35,8 +35,9 @@ class Boost < Formula
   option 'without-static', 'Disable building static library variant'
   option 'with-mpi', 'Build with MPI support'
   option :cxx11
+  option "macosx-deployment-target=", "Mac OS X deployment target"
 
-  depends_on :python => :recommended
+  depends_on :python => :optional
   depends_on UniversalPython if build.universal? and build.with? "python"
 
   if build.with? 'icu'
@@ -163,6 +164,9 @@ class Boost < Formula
     end
 
     args << "address-model=32_64" << "architecture=x86" << "pch=off" if build.universal?
+    macosx_deployment_target = ARGV.value('macosx-deployment-target') || MacOS.version
+    args << "cflags=-mmacosx-version-min=#{macosx_deployment_target}"
+    args << "linkflags=-mmacosx-version-min=#{macosx_deployment_target}"
 
     system "./bootstrap.sh", *bargs
     system "./b2", *args

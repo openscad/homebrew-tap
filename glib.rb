@@ -7,10 +7,11 @@ class Glib < Formula
 
   option :universal
   option 'test', 'Build a debug build and run tests. NOTE: Not all tests succeed yet'
+  option "macosx-deployment-target=", "Mac OS X deployment target"
 
   depends_on 'pkg-config' => :build
-  depends_on 'gettext'
-  depends_on 'libffi'
+  depends_on 'openscad/tap/gettext'
+  depends_on 'openscad/tap/libffi'
 
   fails_with :llvm do
     build 2334
@@ -40,6 +41,7 @@ class Glib < Formula
 
   def install
     ENV.universal_binary if build.universal?
+    macosx_deployment_target = ARGV.value('macosx-deployment-target') || MacOS.version
 
     # Disable dtrace; see https://trac.macports.org/ticket/30413
     args = %W[
@@ -51,6 +53,8 @@ class Glib < Formula
       --prefix=#{prefix}
       --localstatedir=#{var}
       --with-gio-module-dir=#{HOMEBREW_PREFIX}/lib/gio/modules
+      CFLAGS=-mmacosx-version-min=#{macosx_deployment_target}
+      LDFLAGS=-mmacosx-version-min=#{macosx_deployment_target}
     ]
 
     system "./configure", *args
@@ -67,7 +71,7 @@ class Glib < Formula
 
     # `pkg-config --libs glib-2.0` includes -lintl, and gettext itself does not
     # have a pkgconfig file, so we add gettext lib and include paths here.
-    gettext = Formula.factory('gettext').opt_prefix
+    gettext = Formula.factory('openscad/tap/gettext').opt_prefix
     inreplace lib+'pkgconfig/glib-2.0.pc' do |s|
       s.gsub! 'Libs: -L${libdir} -lglib-2.0 -lintl',
               "Libs: -L${libdir} -lglib-2.0 -L#{gettext}/lib -lintl"

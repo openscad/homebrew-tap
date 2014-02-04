@@ -15,9 +15,10 @@ class Mpfr < Formula
     sha1 '62c126d1d949cb4d545f44d9c45fe4b0bf276fd4' => :lion
   end
 
-  depends_on 'gmp'
+  depends_on 'openscad/tap/gmp'
 
   option '32-bit'
+  option "macosx-deployment-target=", "Mac OS X deployment target"
 
   fails_with :clang do
     build 421
@@ -28,6 +29,7 @@ class Mpfr < Formula
   end
 
   def install
+    macosx_deployment_target = ARGV.value('macosx-deployment-target') || MacOS.version
     args = ["--disable-dependency-tracking", "--prefix=#{prefix}"]
 
     # Build 32-bit where appropriate, and help configure find 64-bit CPUs
@@ -38,6 +40,9 @@ class Mpfr < Formula
       ENV.m32
       args << "--build=none-apple-darwin"
     end
+
+    args << "CFLAGS=-mmacosx-version-min=#{macosx_deployment_target}"
+    args << "LDFLAGS=-mmacosx-version-min=#{macosx_deployment_target}"
 
     system "./configure", *args
     system "make"

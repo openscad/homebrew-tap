@@ -16,6 +16,7 @@ class Gmp < Formula
 
   option '32-bit'
   option :cxx11
+  option "macosx-deployment-target=", "Mac OS X deployment target"
 
   # Patches gmp.h to remove the __need_size_t define, which
   # was preventing libc++ builds from getting the ptrdiff_t type
@@ -25,6 +26,7 @@ class Gmp < Formula
   end
 
   def install
+    macosx_deployment_target = ARGV.value('macosx-deployment-target') || MacOS.version
     ENV.cxx11 if build.cxx11?
     args = ["--prefix=#{prefix}", "--enable-cxx"]
 
@@ -36,6 +38,9 @@ class Gmp < Formula
     elsif build.bottle?
       args << "--disable-assembly"
     end
+
+    args << "CFLAGS=-mmacosx-version-min=#{macosx_deployment_target}"
+    args << "LDFLAGS=-mmacosx-version-min=#{macosx_deployment_target}"
 
     system "./configure", *args
     system "make"

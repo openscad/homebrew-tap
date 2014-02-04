@@ -57,11 +57,12 @@ class Qt < Formula
     if ENV.compiler == :clang
         args << "-platform"
 
-        if MacOS.version >= :mavericks
-          args << "unsupported/macx-clang-libc++"
-        else
+# Don't build with libc++, since everything else in OpenSCAD is currently built with libstdc++
+#        if MacOS.version >= :mavericks
+#          args << "unsupported/macx-clang-libc++"
+#        else
           args << "unsupported/macx-clang"
-        end
+#        end
     end
 
     args << "-plugin-sql-mysql" if build.with? 'mysql'
@@ -91,6 +92,8 @@ class Qt < Formula
     end
 
     args << '-developer-build' if build.include? 'developer'
+
+    args << '-no-svg -no-phonon -no-audio-backend -no-multimedia -no-javascript-jit -no-script -no-scripttools -no-declarative -no-xmlpatterns'
 
     system "./configure", *args
     system "make"
