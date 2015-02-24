@@ -93,7 +93,15 @@ class Qt < Formula
 
     args << '-developer-build' if build.include? 'developer'
 
-    args << '-no-svg -no-phonon -no-audio-backend -no-multimedia -no-javascript-jit -no-script -no-scripttools -no-declarative -no-xmlpatterns'
+    args << '-no-svg'
+    args << '-no-phonon'
+    args << '-no-audio-backend'
+    args << '-no-multimedia'
+    args << '-no-javascript-jit'
+    args << '-no-script'
+    args << '-no-scripttools'
+    args << '-no-declarative'
+    args << '-no-xmlpatterns'
 
     system "./configure", *args
     system "make"
