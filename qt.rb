@@ -2,10 +2,13 @@ require 'formula'
 
 class Qt < Formula
   homepage 'http://qt-project.org/'
-  if MacOS.version < :mavericks
-    url 'http://download.qt-project.org/official_releases/qt/4.8/4.8.5/qt-everywhere-opensource-src-4.8.5.tar.gz'
-    sha1 '745f9ebf091696c0d5403ce691dc28c039d77b9e'
-  else
+  if MacOS.version == :yosemite
+    url 'https://github.com/qtproject/qt/archive/997d626173d9aba5b01b35e4d95ad162771ba789.tar.gz'
+    sha1 '3788924b618a0593f6240478b5ad260df852e3fe'
+    # It would be nice if this was a real version number but unfortunately
+    # that will mess with the bottles.
+    version '4.8.6-1'
+  elsif MacOS.version == :mavericks
     # This is a snapshot of the current qt-4.8 branch. It's been used by a
     # bunch of people to get Qt working on Mavericks and 4.8.5 needs too many
     # patches to compile any time soon (January-ish):
@@ -15,7 +18,9 @@ class Qt < Formula
     # It would be nice if this was a real version number but unfortunately
     # that will mess with the bottles.
     version '4.8.5'
-
+  else
+    url 'http://download.qt-project.org/official_releases/qt/4.8/4.8.5/qt-everywhere-opensource-src-4.8.5.tar.gz'
+    sha1 '745f9ebf091696c0d5403ce691dc28c039d77b9e'
   end
 
   head 'git://gitorious.org/qt/qt.git', :branch => '4.8'
@@ -47,10 +52,6 @@ class Qt < Formula
             "-confirm-license", "-opensource",
             "-nomake", "demos", "-nomake", "examples",
             "-cocoa", "-fast", "-release"]
-
-    # we have to disable these to avoid triggering optimization code
-    # that will fail in superenv (in --env=std, Qt seems aware of this)
-    args << '-no-3dnow' << '-no-ssse3' if superenv?
 
     args << "-L#{MacOS::X11.lib}" << "-I#{MacOS::X11.include}" if MacOS::X11.installed?
 
