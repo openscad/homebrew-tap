@@ -3,7 +3,7 @@ require 'formula'
 class Opencsg < Formula
   homepage 'http://www.opencsg.org'
   url 'http://www.opencsg.org/OpenCSG-1.4.0.tar.gz'
-  sha1 '2c2592a9f625ec1c7a3d208403ea2ac1cae2f972'
+  sha256 'ecb46be54cfb8a338d2a9b62dec90ec8da6c769078c076f58147d4a6ba1c878d'
 
   option "macosx-deployment-target=", "Mac OS X deployment target"
 
