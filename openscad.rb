@@ -2,22 +2,28 @@ require 'formula'
 
 class Openscad < Formula
   homepage 'http://www.openscad.org'
-  version '2013.06'
+  version '2015.03-3'
   url 'http://files.openscad.org/openscad-#{version}.src.tar.gz'
-  sha1 '8730cbea304ba178a6819dc2acc4bf41135b684a'
+  sha256 '5d2a7d83c32f4201ee0d17445a36baccaebc0bc7facd009fc8dd86ee537c5a36'
 
   head do
     url 'https://github.com/openscad/openscad.git', :using => :git
     version 'FIXME: YYYY.MM.DD'
   end
 
-  depends_on 'openscad/tap/qt'
-  depends_on 'openscad/tap/eigen'
-  depends_on 'openscad/tap/boost'
-  depends_on 'openscad/tap/cgal'
-  depends_on 'openscad/tap/glew'
-  depends_on 'openscad/tap/glib'
-  depends_on 'openscad/tap/opencsg'
+  depends_on "eigen"
+  depends_on "boost"
+  depends_on "cgal"
+  depends_on "glew"
+  depends_on "glib"
+  depends_on "opencsg"
+  depends_on "freetype"
+  depends_on "libzip"
+  depends_on "libxml2"
+  depends_on "fontconfig"
+  depends_on "harfbuzz"
+  depends_on "qt5"
+  depends_on "qscintilla2"
 
   def install
     system "qmake", "VERSION=#{version}", "PREFIX=#{prefix}", 
