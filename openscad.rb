@@ -3,7 +3,7 @@ require 'formula'
 class Openscad < Formula
   homepage 'http://www.openscad.org'
   version '2015.03-3'
-  url 'http://files.openscad.org/openscad-#{version}.src.tar.gz'
+  url 'http://files.openscad.org/openscad-2015.03-3.src.tar.gz'
   sha256 '5d2a7d83c32f4201ee0d17445a36baccaebc0bc7facd009fc8dd86ee537c5a36'
 
   head do
@@ -27,7 +27,7 @@ class Openscad < Formula
 
   def install
     system "qmake", "VERSION=#{version}", "PREFIX=#{prefix}", 
-      "OPENSCAD_LIBRARIES=#{HOMEBREW_PREFIX}", "CONFIG--debug", "CONFIG+=deploy"
+      "OPENSCAD_LIBRARIES=#{HOMEBREW_PREFIX}", "CONFIG-=debug", "CONFIG+=deploy"
     system "make"
     system "make install"
   end
