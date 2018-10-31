@@ -1,14 +1,18 @@
 class Lib3mf < Formula
   desc "Lib3MF - C++ implementation of the 3D Manufacturing Format file standard"
   homepage "https://github.com/3MFConsortium/lib3mf/"
-  url "https://github.com/3MFConsortium/lib3mf/archive/a466df47231c02298dde295adb6075b0fc649eba.tar.gz"
-  version "20160218T183543.gita466df4"
-  sha256 "28703467797e39e590d8fbdcc43b726286603c8862649b814d11c043e7b6dce1"
+  url "https://github.com/t-paul/lib3mf/archive/openscad-build.zip"
+  version "20181018T131926.git828d049"
+  sha256 "82a55d3124e849d97762b657444e476b20624ec3da4b02480337adb8d14b28a0"
+
+  depends_on "cmake" => :build
+  depends_on "ossp-uuid"
 
   def install
-    # ENV.deparallelize  # if your formula fails when building in parallel
-
-    system "make", "-C", "Project/Lib3MFGCC"
-    system "make", "-C", "Project/Lib3MFGCC", "install", "INSTALL_ROOT=#{prefix}"
+    mkdir "build" do
+      system "cmake", "-G", "Unix Makefiles", "-DLIB3MF_TESTS=false", "..", *std_cmake_args
+      system "make"
+      system "make", "install"
+    end
   end
 end
