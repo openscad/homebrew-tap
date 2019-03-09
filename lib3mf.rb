@@ -1,9 +1,9 @@
 class Lib3mf < Formula
   desc "Lib3MF - C++ implementation of the 3D Manufacturing Format file standard"
   homepage "https://github.com/3MFConsortium/lib3mf/"
-  url "https://github.com/t-paul/lib3mf/archive/openscad-build.zip"
-  version "20181018T131926.git828d049"
-  sha256 "82a55d3124e849d97762b657444e476b20624ec3da4b02480337adb8d14b28a0"
+  url "https://github.com/3MFConsortium/lib3mf/archive/v1.8.1.tar.gz"
+  version "1.8.1"
+  sha256 "207dd142c9ca86a4fb1a4b2baadbdf579f35e03f9b8bf5c02dae027da5ae9d17"
 
   depends_on "cmake" => :build
   depends_on "ossp-uuid"
