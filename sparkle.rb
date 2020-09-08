@@ -9,22 +9,9 @@ class Sparkle < Formula
     lib.install "build/Release/Sparkle.framework"
   end
 
-  def patches
-    DATA
+  patch do
+    url "https://raw.githubusercontent.com/openscad/homebrew-tap/master/sparkle-constants.patch"
+    sha256 "a4bbf9a070135d718f89c5f4c0ae2ccc0b1d51e98e61be6b90f08aade06185c9"
   end
-end
 
-__END__
-diff --git a/SUConstants.h b/SUConstants.h
-index 0dcc6cf..25dbe6d 100644
---- a/SUConstants.h
-+++ b/SUConstants.h
-@@ -24,7 +24,7 @@
- // If your app file on disk is named "MyApp 1.1b4", Sparkle usually updates it
- //	in place, giving you an app named 1.1b4 that is actually 1.2. Turn the
- //	following on to always reset the name back to "MyApp":
--#define NORMALIZE_INSTALLED_APP_NAME				0
-+#define NORMALIZE_INSTALLED_APP_NAME				1
- 
- 
- #define TRY_TO_APPEND_VERSION_NUMBER				1
+end
