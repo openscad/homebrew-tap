@@ -8,5 +8,5 @@ To install OpenSCAD via homebrew, please use the package maintained
 by the homebrew team at https://github.com/Homebrew/homebrew-cask:
 
 ```
-  brew cask install openscad
+  brew install --cask openscad
 ```
